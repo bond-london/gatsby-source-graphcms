@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import fs from 'fs'
+import path from 'path'
 import {
   wrapQueryExecutorWithQueue,
   loadSchema,
@@ -252,7 +253,10 @@ export async function onCreateNode(
         createNode,
         createNodeId,
         getCache,
-        ...(node.fileName && { name: node.fileName }),
+        ...(node.fileName && {
+          name: node.fileName,
+          ext: path.extname(node.fileName),
+        }),
       })
 
       if (fileNode) node.localFile = fileNode.id
